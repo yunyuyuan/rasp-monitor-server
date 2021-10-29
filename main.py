@@ -30,12 +30,12 @@ with picamera.PiCamera(resolution='1280x720', framerate=30) as camera:
 
 def gen():
     while True:
-        while True:
-            with output.condition:
-                output.condition.wait()
-                frame = output.frame
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        with output.condition:
+            print('got it')
+            output.condition.wait()
+            frame = output.frame
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
 @app.route('/monitor.mjpeg')
